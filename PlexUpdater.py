@@ -15,8 +15,8 @@ import os.path
 # Config
 # -------------------------
 DATABASE_FILE_NAME = 'database.dat'
-DATABASE_RASPI_FOLDER = 'C:/Users/eshm02/Personal/Python/Raspi'
-DATABASE_PC_FOLDER = 'C:/Users/eshm02/Personal/Python/Pc'
+DATABASE_RASPI_FOLDER = 'C:/Users/user/Personal/Python/Raspi'
+DATABASE_PC_FOLDER = 'C:/Users/user/Personal/Python/Pc'
 
 # -------------------------
 # Main
