@@ -21,7 +21,14 @@ def startServer():
 		os.system("sudo /etc/init.d/plexmediaserver start")
 	return None
 
-
+def updateDatabase(srcFolder, dstFolder):
+	return None
+def switchFolders(srcFolder, dstFolder):
+	#dstFolder is newer, srcFolder needs to be updated. We switch p
+	temp=srcFolder
+	srcFolder=dstFolder
+	dstFolder=temp
+	return None
 # -------------------------
 # Config
 # -------------------------
@@ -34,24 +41,23 @@ DATABASE_EXDISK_FOLDER = r'/mnt/volume/plexmediaserver/Plex Media Server/Plug-in
 # -------------------------
 stopServer()
 
-src=os.path.join(DATABASE_SYSTEM_FOLDER,DATABASE_FILE_NAME)
-dst=os.path.join(DATABASE_EXDISK_FOLDER,DATABASE_FILE_NAME)
+srcFolder=DATABASE_SYSTEM_FOLDER
+dstFolder=DATABASE_EXDISK_FOLDER
 
-diff_time = os.stat(src).st_mtime - os.stat(dst).st_mtime
+diff_time = os.stat(os.path.join(srcFolder,DATABASE_FILE_NAME)).st_mtime - os.stat(os.path.join(dstFolder,DATABASE_FILE_NAME)).st_mtime
 
 if diff_time < 0:
-	#dst is newer, src needs to be updated. We switch p
-	temp=src
-	src=dst
-	dst=temp
+	switchFolders(srcFolder,dstFolder)
 	
 if diff_time == 0:
 	print("No changes in database. Nothing to be done.")
 else:
-	print("Copy from source: ", src)
-	print("to destination: ", dst)
-	shutil.copy2(src, dst)
-	#os.system("cp -f "+src+" "+dst)
+	print("Copy from source: ", srcFolder)
+	print("to destination: ", dstFolder)
+	#El copy no me lo esta haciendo bien, al menos no parece verse actualizado:
+	updateDatabase(srcFolder, dstFolder)
+	#shutil.copy2(srcFolder, dstFolder)
+	#os.system("cp -f "+srcFolder+" "+dstFolder)
 
 startServer()
 	
