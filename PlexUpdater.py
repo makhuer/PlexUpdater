@@ -29,16 +29,16 @@ def startServer():
 # Config
 # -------------------------
 DATABASE_FILE_NAME = 'database.dat'
-DATABASE_RASPI_FOLDER = './Raspi'
-DATABASE_PC_FOLDER = './Pc'
+DATABASE_SYSTEM_FOLDER = './Raspi'
+DATABASE_EXDISK_FOLDER = './Pc'
 
 # -------------------------
 # Main
 # -------------------------
 stopServer()
 
-src=os.path.join(DATABASE_RASPI_FOLDER,DATABASE_FILE_NAME)
-dst=os.path.join(DATABASE_PC_FOLDER,DATABASE_FILE_NAME)
+src=os.path.join(DATABASE_SYSTEM_FOLDER,DATABASE_FILE_NAME)
+dst=os.path.join(DATABASE_EXDISK_FOLDER,DATABASE_FILE_NAME)
 
 diff_time = os.stat(src).st_mtime - os.stat(dst).st_mtime
 
