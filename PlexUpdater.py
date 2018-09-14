@@ -3,28 +3,40 @@ import os
 import sys
 
 
+def stopServer():
+	print("Stoping server in Platform: ", sys.platform)
+	if sys.platform == "win32" :
+		#TODO
+		print("Stoping windows server...")
+	elif sys.platform == "Linux":
+		os.system("sudo /etc/init.d/plexmediaserver stop")
+	return None
 
-
-
-#Stop server
-#sudo /etc/init.d/plexmediaserver stop
+def startServer():
+	print("Starting server in platform: ", sys.platform)
+	if sys.platform == "win32":
+		#TODO
+		print("Starting windows server...")
+	elif sys.platform == "Linux":
+		os.system("sudo /etc/init.d/plexmediaserver start")
+	return None
 
 #Copy databases
 #cp -rf /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Plug-in\ Support/Databases/*.db /mnt/volume/plexmediaserver/Plex\ Media\ Server/Plug-in\ Support/Databases
 
-#Start server
-#sudo /etc/init.d/plexmediaserver start
 
 # -------------------------
 # Config
 # -------------------------
 DATABASE_FILE_NAME = 'database.dat'
-DATABASE_RASPI_FOLDER = 'C:/Users/eshm02/Personal/PlexUpdater/Raspi'
-DATABASE_PC_FOLDER = 'C:/Users/eshm02/Personal/PlexUpdater/Pc'
+DATABASE_RASPI_FOLDER = './Raspi'
+DATABASE_PC_FOLDER = './Pc'
 
 # -------------------------
 # Main
 # -------------------------
+stopServer()
+
 src=os.path.join(DATABASE_RASPI_FOLDER,DATABASE_FILE_NAME)
 dst=os.path.join(DATABASE_PC_FOLDER,DATABASE_FILE_NAME)
 
@@ -42,4 +54,7 @@ else:
 	print("Copy from source: ", src)
 	print("to destination: ", dst)
 	shutil.copy2(src, dst)
+
+startServer()
+	
 sys.exit(0)
