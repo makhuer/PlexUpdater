@@ -25,7 +25,7 @@ def updateDatabase(srcFolder, dstFolder):
 	for file in DATABASE_FILES_TO_COPY:
 		if (os.path.isfile(os.path.join(dstFolder,file))):
 			print("Deleting ",os.path.join(dstFolder,file))
-			shutil.remove(os.path.join(dstFolder,file))
+			os.remove(os.path.join(dstFolder,file))
 		shutil.copy(os.path.join(srcFolder,file), dstFolder)
 
 	return None
