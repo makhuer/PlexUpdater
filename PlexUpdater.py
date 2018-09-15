@@ -22,19 +22,34 @@ def startServer():
 	return None
 
 def updateDatabase(srcFolder, dstFolder):
+	for file in DATABASE_FILES_TO_COPY:
+		shutil.copy(os.path.join(srcFolder,file), dstFolder)
+
 	return None
+	
 def switchFolders(srcFolder, dstFolder):
 	#dstFolder is newer, srcFolder needs to be updated. We switch p
 	temp=srcFolder
 	srcFolder=dstFolder
 	dstFolder=temp
 	return None
+	
+def getLastModificationTime(folder):
+	lastTime=0
+	for file in DATABASE_FILES_TO_COPY:
+		filePath=os.path.join(folder,file)
+		if os.path.isfile(filePath) and os.stat(filePath).st_mtime > lastTime:
+			lastTime = os.stat(filePath).st_mtime		
+	return lastTime
+	
 # -------------------------
 # Config
 # -------------------------
-DATABASE_FILE_NAME = 'com.plexapp.plugins.library.db'
-DATABASE_SYSTEM_FOLDER = r'/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/'
-DATABASE_EXDISK_FOLDER = r'/mnt/volume/plexmediaserver/Plex Media Server/Plug-in Support/Databases'
+#DATABASE_SYSTEM_FOLDER = r'/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/'
+#DATABASE_EXDISK_FOLDER = r'/mnt/volume/plexmediaserver/Plex Media Server/Plug-in Support/Databases'
+DATABASE_SYSTEM_FOLDER = './Pc'
+DATABASE_EXDISK_FOLDER = './Raspi'
+DATABASE_FILES_TO_COPY = ['com.plexapp.plugins.library.db','com.plexapp.plugins.library.blobs.db-shm','com.plexapp.plugins.library.db-wal','com.plexapp.plugins.library.db-shm']
 
 # -------------------------
 # Main
@@ -44,7 +59,7 @@ stopServer()
 srcFolder=DATABASE_SYSTEM_FOLDER
 dstFolder=DATABASE_EXDISK_FOLDER
 
-diff_time = os.stat(os.path.join(srcFolder,DATABASE_FILE_NAME)).st_mtime - os.stat(os.path.join(dstFolder,DATABASE_FILE_NAME)).st_mtime
+diff_time = getLastModificationTime(srcFolder) - getLastModificationTime(dstFolder)
 
 if diff_time < 0:
 	switchFolders(srcFolder,dstFolder)
@@ -54,10 +69,7 @@ if diff_time == 0:
 else:
 	print("Copy from source: ", srcFolder)
 	print("to destination: ", dstFolder)
-	#El copy no me lo esta haciendo bien, al menos no parece verse actualizado:
 	updateDatabase(srcFolder, dstFolder)
-	#shutil.copy2(srcFolder, dstFolder)
-	#os.system("cp -f "+srcFolder+" "+dstFolder)
 
 startServer()
 	
