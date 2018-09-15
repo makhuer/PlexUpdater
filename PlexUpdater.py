@@ -48,10 +48,10 @@ def getLastModificationTime(folder):
 # -------------------------
 # Config
 # -------------------------
-#DATABASE_SYSTEM_FOLDER = r'/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/'
-#DATABASE_EXDISK_FOLDER = r'/mnt/volume/plexmediaserver/Plex Media Server/Plug-in Support/Databases'
-DATABASE_SYSTEM_FOLDER = './Pc'
-DATABASE_EXDISK_FOLDER = './Raspi'
+DATABASE_SYSTEM_FOLDER = r'/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Databases/'
+DATABASE_EXDISK_FOLDER = r'/mnt/volume/plexmediaserver/Plex Media Server/Plug-in Support/Databases'
+#DATABASE_SYSTEM_FOLDER = './Pc'
+#DATABASE_EXDISK_FOLDER = './Raspi'
 DATABASE_FILES_TO_COPY = ['com.plexapp.plugins.library.db','com.plexapp.plugins.library.blobs.db-shm','com.plexapp.plugins.library.db-wal','com.plexapp.plugins.library.db-shm']
 
 # -------------------------
